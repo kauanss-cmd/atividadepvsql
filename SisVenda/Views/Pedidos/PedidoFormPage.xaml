@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SisVenda.PedidoFormPage"
+             Title="Cadastro Pedido">
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="10">
+            <Picker x:Name="clientePicker" Title="Cliente *" ItemDisplayBinding="{Binding Nome}" />
+            <DatePicker x:Name="dataPicker" />
+            <Editor x:Name="observacaoEditor" Placeholder="Observação" AutoSize="TextChanges" HeightRequest="90" />
+
+            <Label Text="Itens do Pedido" FontAttributes="Bold" FontSize="16" />
+
+            <Picker x:Name="produtoPicker" Title="Produto *" ItemDisplayBinding="{Binding Nome}" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Entry x:Name="qtdEntry" Grid.Column="0" Placeholder="Quantidade *" Keyboard="Numeric" />
+                <Entry x:Name="valorEntry" Grid.Column="1" Placeholder="Valor unitário *" Keyboard="Numeric" />
+            </Grid>
+
+            <Button Text="Adicionar Item" Clicked="AdicionarItem_Clicked" />
+
+            <CollectionView x:Name="itensCollectionView" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="8" Margin="0,4" BorderColor="#DDD" CornerRadius="6">
+                            <Grid ColumnDefinitions="2*,1*,1*,1*,Auto" ColumnSpacing="8">
+                                <Label Grid.Column="0" Text="{Binding Produto.Nome}" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding Qtd}" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="{Binding Valor, StringFormat='{0:C}'}" VerticalOptions="Center" />
+                                <Label Grid.Column="3" Text="{Binding ValorTotal, StringFormat='{0:C}'}" VerticalOptions="Center" />
+                                <Button Grid.Column="4" Text="Remover" Clicked="RemoverItem_Clicked" CommandParameter="{Binding .}" BackgroundColor="#FF6666" WidthRequest="90" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label x:Name="totalLabel" Text="Total: R$ 0,00" FontAttributes="Bold" FontSize="16" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Salvar" Clicked="Salvar_Clicked" />
+                <Button Text="Cancelar" Clicked="Cancelar_Clicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
